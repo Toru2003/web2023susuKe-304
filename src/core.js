@@ -115,20 +115,31 @@ function sequence(start = 0, step = 1) {
  * deepEqual({arr: [22, 33], text: 'text'}, {arr: [22, 3], text: 'text2'}) // false
  */
 function deepEqual(firstObject, secondObject) {
+    // Проверка на строгое равенство (для примитивных значений и ссылок на один и тот же объект)
     if (firstObject === secondObject) {
         return true;
     }
+
+    // Проверка на NaN (так как NaN === NaN всегда false)
     if (Number.isNaN(firstObject) && Number.isNaN(secondObject)) {
         return true;
     }
+
+    // Проверка на тип объекта
     if (typeof firstObject !== 'object' || typeof secondObject !== 'object') {
         return false;
     }
+
+    // Получение ключей объектов
     const firstKeys = Object.keys(firstObject);
     const secondKeys = Object.keys(secondObject);
+
+    // Проверка на количество ключей
     if (firstKeys.length !== secondKeys.length) {
         return false;
     }
+
+    // Рекурсивное сравнение значений свойств
     for (const key of firstKeys) {
         if (
             !(
@@ -139,6 +150,8 @@ function deepEqual(firstObject, secondObject) {
             return false;
         }
     }
+
+    // Если все проверки пройдены, объекты считаются глубоко равными
     return true;
 }
 
